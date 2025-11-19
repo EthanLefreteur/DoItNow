@@ -8,3 +8,4 @@
 /Symfony/var/
 /Symfony/vendor/
 ###< symfony/framework-bundle ###
+/Symfony/.env
