@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\UtilisateurRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,7 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class UtilisateurController extends AbstractController {
 
     #[Route(path: "/", name: 'app_utilisateur_index', methods: ['GET'])]
-    public function index(UtilisateurRepository $utilisateurRepository): JsonResponse
+    public function index(Request $request, UtilisateurRepository $utilisateurRepository): JsonResponse
     {
         $json_array = array();
         foreach ($utilisateurRepository->findAll() as $user) {

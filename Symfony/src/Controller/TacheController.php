@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\TacheRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,10 +12,34 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class TacheController extends AbstractController {
 
     #[Route(path: "/", name: 'app_tache_index', methods: ['GET'])]
-    public function index(TacheRepository $tacheRepository): JsonResponse
+    public function index(Request $request): JsonResponse
     {
         return $this->json([
-            "taches" => $tacheRepository->findAll()
+            "code-erreur" => 501,
+        ]);
+    }
+
+    #[Route(path: "/show/{id}", name: 'app_tache_show', methods: ['GET'])]
+    public function show(Request $request): JsonResponse
+    {
+        return $this->json([
+            "code-erreur" => 501,
+        ]);
+    }
+
+    #[Route(path: "/new", name: 'app_tache_new', methods: ['POST'])]
+    public function new(Request $request): JsonResponse
+    {
+        return $this->json([
+            "code-erreur" => 501,
+        ]);
+    }
+
+    #[Route(path: "/delete/{id}", name: 'app_tache_delete', methods: ['POST'])]
+    public function delete(Request $request): JsonResponse
+    {
+        return $this->json([
+            "code-erreur" => 501,
         ]);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\PrioriteRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,20 +12,34 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class PrioriteController extends AbstractController {
 
     #[Route(path: "/", name: 'app_priorite_index', methods: ['GET'])]
-    public function index(PrioriteRepository $prioriteRepository): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        $json_array = array();
-        foreach ($prioriteRepository->findAll() as $priorite) {
-            array_push($json_array, 
-                array(
-                    "id" => $priorite->getId(),
-                    "libelle" => $priorite->getLibelle()
-                )
-            );
-        }
-        
         return $this->json([
-            "statuts" => $json_array
+            "code-erreur" => 501,
+        ]);
+    }
+
+    #[Route(path: "/show/{id}", name: 'app_priorite_show', methods: ['GET'])]
+    public function show(Request $request): JsonResponse
+    {
+        return $this->json([
+            "code-erreur" => 501,
+        ]);
+    }
+
+    #[Route(path: "/new", name: 'app_priorite_new', methods: ['POST'])]
+    public function new(Request $request): JsonResponse
+    {
+        return $this->json([
+            "code-erreur" => 501,
+        ]);
+    }
+
+    #[Route(path: "/delete/{id}", name: 'app_priorite_delete', methods: ['POST'])]
+    public function delete(Request $request): JsonResponse
+    {
+        return $this->json([
+            "code-erreur" => 501,
         ]);
     }
 }

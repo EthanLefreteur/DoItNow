@@ -16,7 +16,7 @@ class Utilisateur
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
-    private ?string $Nom = null;
+    private ?string $nom = null;
 
     #[ORM\Column(length: 50)]
     private ?string $prenom = null;
@@ -39,6 +39,12 @@ class Utilisateur
     #[ORM\OneToMany(targetEntity: Tache::class, mappedBy: 'utilisateur', orphanRemoval: true)]
     private Collection $taches;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $token_jwt = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?\DateTime $date_echeance_token = null;
+
     public function __construct()
     {
         $this->taches = new ArrayCollection();
@@ -51,12 +57,12 @@ class Utilisateur
 
     public function getNom(): ?string
     {
-        return $this->Nom;
+        return $this->nom;
     }
 
-    public function setNom(string $Nom): static
+    public function setNom(string $nom): static
     {
-        $this->Nom = $Nom;
+        $this->nom = $nom;
 
         return $this;
     }
@@ -147,6 +153,30 @@ class Utilisateur
                 $tach->setUtilisateur(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTokenJwt(): ?string
+    {
+        return $this->token_jwt;
+    }
+
+    public function setTokenJwt(?string $token_jwt): static
+    {
+        $this->token_jwt = $token_jwt;
+
+        return $this;
+    }
+
+    public function getDateEcheanceToken(): ?\DateTime
+    {
+        return $this->date_echeance_token;
+    }
+
+    public function setDateEcheanceToken(?\DateTime $date_echeance_token): static
+    {
+        $this->date_echeance_token = $date_echeance_token;
 
         return $this;
     }
