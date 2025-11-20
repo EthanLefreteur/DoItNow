@@ -39,7 +39,7 @@ class Utilisateur
     #[ORM\OneToMany(targetEntity: Tache::class, mappedBy: 'utilisateur', orphanRemoval: true)]
     private Collection $taches;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 800, nullable: true)]
     private ?string $token_jwt = null;
 
     #[ORM\Column(nullable: true)]

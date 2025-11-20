@@ -92,13 +92,13 @@ class SecurityController extends AbstractController {
                     "token" => '',
                 ]);
             }
-
-            $token = $this->getJWT();
-
-            $user->setTokenJwt($token);
             $date = new DateTime();
             $date = $date->add(new DateInterval("P1D"));
             $user->setDateEcheanceToken($date);
+
+            $token = $this->getJWT($user->getIdentifiant(), $user->getDateEcheanceToken());
+            $user->setTokenJwt($token);
+
             $entityManager->flush();
 
             return $this->json([
@@ -179,7 +179,12 @@ class SecurityController extends AbstractController {
         $user->setRole("USER");
         $user->setNom($nom);
         $user->setPrenom($prenom);
-        $token = $this->getJWT();
+        
+        $date = new DateTime();
+        $date = $date->add(new DateInterval("P1D"));
+        $user->setDateEcheanceToken($date);
+
+        $token = $this->getJWT($identifant, $user->getDateEcheanceToken());
         $user->setTokenJwt($token);
 
         $entityManager->persist($user);
@@ -191,7 +196,32 @@ class SecurityController extends AbstractController {
         ]);
     }
 
-    private function getJWT(): string {
-        return "test_token";
+    private function getJWT(string $identifiant, DateTime $expiration_date): string {
+        return $this->gen_jwt(["identifiant" => $identifiant, "expiration_date" => $expiration_date]);
     }
+
+    // Source - https://stackoverflow.com/a
+    // Posted by cloudsurfin
+    // Retrieved 2025-11-20, License - CC BY-SA 4.0
+
+    function gen_jwt(array $payload): String{
+        $signing_key = "changeme";
+        $header = [ 
+            "alg" => "HS512", 
+            "typ" => "JWT" 
+        ];
+        $header = $this->base64_url_encode(json_encode($header));
+        $payload = $this->base64_url_encode(json_encode($payload));
+        $signature = $this->base64_url_encode(hash_hmac('sha512', "$header.$payload", $signing_key, true));
+        $jwt = "$header.$payload.$signature";
+        return $jwt;    
+    }
+
+    /**
+     * per https://stackoverflow.com/questions/2040240/php-function-to-generate-v4-uuid/15875555#15875555
+     */
+    function base64_url_encode($text):String{
+        return str_replace(['+', '/', '='], ['-', '_', ''], base64_encode($text));
+    }
+
 }
