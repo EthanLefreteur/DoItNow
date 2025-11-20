@@ -5,10 +5,12 @@
 ### /
 
 <green> Entrée
-+ Aucune
++ Header de la requête:
++ + Authorization: [Token JWT]
 
 <red> Sortie
 + Json {
+    "code-erreur": [int](#code-erreur),
     "categories": {
         "id": int,
         "nom": string,
@@ -19,9 +21,26 @@
 ### /new
 
 <green> Entrée
++ Header de la requête:
++ + Authorization: [Token JWT]
 + Form {
-    "libelle": string,
+    "nom": string,
     "couleur": string
+}
+
+<red> Sortie
++ Json {
+    "code-erreur": [int](#code-erreur),
+    "id": int,
+}
+
+### /delete/{id}
+
+<green> Entrée
++ Header de la requête:
++ + Authorization: [Token JWT]
++ Form {
+    "id": int,
 }
 
 <red> Sortie
@@ -29,30 +48,33 @@
     "code-erreur": [int](#code-erreur),
 }
 
-### /delete/{id}
-
-<green> Entrée
-+ Aucune
-
-<red> Sortie
-+ Aucune
-
 ### /show/{id}
 
 <green> Entrée
-+ Aucune
++ Header de la requête:
++ + Authorization: [Token JWT]
++ Form {
+    "id": int,
+}
 
 <red> Sortie
-+ Aucune
++ Json {
+    "code-erreur": [int](#code-erreur),
+    "id": int,
+    "nom": string,
+    "couleur": string
+}
 
 ## /tache
 ### /
 
 <green> Entrée
-+ Aucune
++ Header de la requête:
++ + Authorization: [Token JWT]
 
 <red> Sortie
 + Json {
+    "code-erreur": [int](#code-erreur),
     "taches": {
         "id": int,
         "titre": string,
@@ -73,7 +95,8 @@
 ### /new
 
 <green> Entrée
-+ Aucune
++ Header de la requête:
++ + Authorization: [Token JWT]
 
 <red> Sortie
 + Aucune
@@ -81,7 +104,8 @@
 ### /delete/{id}
 
 <green> Entrée
-+ Aucune
++ Header de la requête:
++ + Authorization: [Token JWT]
 
 <red> Sortie
 + Aucune
@@ -89,7 +113,8 @@
 ### /show/{id}
 
 <green> Entrée
-+ Aucune
++ Header de la requête:
++ + Authorization: [Token JWT]
 
 <red> Sortie
 + Aucune
@@ -98,7 +123,8 @@
 ### /
 
 <green> Entrée
-+ Aucune
++ Header de la requête:
++ + Authorization: [Token JWT]
 
 <red> Sortie
 + Json {
@@ -109,14 +135,35 @@
     }
 }
 
+### /new
+
+<green> Entrée
++ Header de la requête:
++ + Authorization: [Token JWT]
++ Form {
+    identifiant: string,
+    mot_de_passe: string,
+    mail: string,
+    nom: string,
+    prenom: string
+}
+
+<red> Sortie
++ Json {
+    "code-erreur": [int](#code-erreur),
+    "id": int,
+}
+
 ## /statut
 ### /
 
 <green> Entrée
-+ Aucune
++ Header de la requête:
++ + Authorization: [Token JWT]
 
 <red> Sortie
 + Json {
+    "code-erreur": [int](#code-erreur),
     "statuts": {
         "id": int,
         "libelle": string
@@ -127,20 +174,29 @@
 ### /
 
 <green> Entrée
-+ Aucune
++ Header de la requête:
++ + Authorization: [Token JWT]
 
 <red> Sortie
 + Json {
+    "code-erreur": [int](#code-erreur),
     "statuts": {
         "id": int,
         "libelle": string
     }
 }
 
-## /login
+## /signin
 
 <green> Entrée
-+ Aucune
++ Form {
+    identifiant: string,
+    mot_de_passe: string,
+    mail: string,
+    nom: string,
+    prenom: string
+}
+
 
 <red> Sortie
 + Json {
@@ -148,5 +204,45 @@
     "token": token-jwt (string),
 }
 
+## /login
 
-# <a name="#code-erreur"></a> Code Erreur
+<green> Entrée
++ Form {
+    identifiant: string,
+    mot_de_passe: string,
+}
+
+<red> Sortie
++ Json {
+    "code-erreur": int,
+    "token": token-jwt (string),
+}
+
+## /logout
+
+<green> Entrée
++ Header de la requête:
++ + Authorization: [Token JWT]
+
+<red> Sortie
++ Json {
+    "code-erreur": int,
+}
+
+
+# <a name="#code-erreur"></a> Code Erreur/HTTP
+
+### 200
+Réussite
+
+### 400
+Données invalides / manquantes
+
+### 401
+Non connecté / mauvais identifiants
+
+### 403
+Non autorisé
+
+### 501
+Non implémenté

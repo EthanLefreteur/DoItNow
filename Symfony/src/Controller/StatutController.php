@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\StatutRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -11,20 +12,34 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class StatutController extends AbstractController {
 
     #[Route(path: "/", name: 'app_statut_index', methods: ['GET'])]
-    public function index(StatutRepository $statutRepository): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        $json_array = array();
-        foreach ($statutRepository->findAll() as $statut) {
-            array_push($json_array, 
-                array(
-                    "id" => $statut->getId(),
-                    "libelle" => $statut->getLibelle()
-                )
-            );
-        }
-        
         return $this->json([
-            "statuts" => $json_array
+            "code-erreur" => 501,
+        ]);
+    }
+
+    #[Route(path: "/show/{id}", name: 'app_statut_show', methods: ['GET'])]
+    public function show(Request $request): JsonResponse
+    {
+        return $this->json([
+            "code-erreur" => 501,
+        ]);
+    }
+
+    #[Route(path: "/new", name: 'app_statut_new', methods: ['POST'])]
+    public function new(Request $request): JsonResponse
+    {
+        return $this->json([
+            "code-erreur" => 501,
+        ]);
+    }
+
+    #[Route(path: "/delete/{id}", name: 'app_statut_delete', methods: ['POST'])]
+    public function delete(Request $request): JsonResponse
+    {
+        return $this->json([
+            "code-erreur" => 501,
         ]);
     }
 }
