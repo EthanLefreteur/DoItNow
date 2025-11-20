@@ -33,8 +33,8 @@ class SecurityController extends AbstractController {
         ]);
     }
 
-    public static function checkSecurity(EntityManagerInterface $entityManager,string $token, string $perm): bool {
-        
+    public static function checkSecurity(EntityManagerInterface $entityManager,?string $token, string $perm): bool {
+
         if ($token == null) {
             return false;
         }
