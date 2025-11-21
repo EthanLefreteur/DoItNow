@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import Register from "../components/CreateUser.components";
-import Login from "../components/login2.component";
+import Login from "../components/login.component";
 import Task from "../components/task.component";
 import AddTaskPage from "../components/addTask.component";
 import EditTaskPage from "../components/editTask.component";
@@ -16,24 +16,84 @@ const Router = createBrowserRouter([
         element: < Login />,
     },
     {
-        path: "/task",
+        path: "/tache",
         element: < Task />,
     },
     {
-        path: "/add-task",
+        path: "/tache/new",
         element: < AddTaskPage />,
     },
     {
-        path: "/edit-task/{id}",
+        path: "/tache/edit/{id}",
         element: < EditTaskPage />,
     },
     {
-        path: "/delete-task/{id}",
+        path: "/tache/delete/{id}",
         element: < DeleteTask />,
     },
     {
-        path: "/CreateUser",
+        path: "/admin/utilisateur/new",
         element: < Register />,
-    }
+    },
+    {
+        path: "/admin/utilisateur/show/{id}",
+        element: < Task />,
+    },
+    {
+        path: "/admin/utilisateur/delete/{id}",
+        element: < Task />,
+    },
+    {
+        path: "/admin/utilisateur/edit/{id}",
+        element: < Task />,
+    },
+    {
+        path: "/admin/categorie/new",
+        element: < Task />,
+    },
+    {
+        path: "/categorie/show/{id}",
+        element: < Task />,
+    },
+    {
+        path: "/admin/categorie/delete/{id}",
+        element: < Task />,
+    },
+    {
+        path: "/admin/categorie/edit/{id}",
+        element: < Task />,
+    },
+    {
+        path: "/admin/priorite/new",
+        element: < Task />,
+    },
+    {
+        path: "/priorite/show/{id}",
+        element: < Task />,
+    },
+    {
+        path: "/admin/priorite/delete/{id}",
+        element: < Task />,
+    },
+    {
+        path: "/admin/priorite/edit/{id}",
+        element: < Task />,
+    },
+    {
+        path: "/admin/statut/new",
+        element: < Task />,
+    },
+    {
+        path: "/statut/show/{id}",
+        element: < Task />,
+    },
+    {
+        path: "/admin/statut/delete/{id}",
+        element: < Task />,
+    },
+    {
+        path: "/admin/statut/edit/{id}",
+        element: < Task />,
+    },
 ]);
 export { Router };

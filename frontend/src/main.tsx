@@ -6,7 +6,7 @@ import { BrowserRouter, RouterProvider, Route } from "react-router-dom";
 
 import { Router } from "./routes/RouterProvider";
 
-import Login2 from "./components/login2.component";
+import Login2 from "./components/login.component";
 import Taskpage from "./components/task.component";
 
 const rootElement = document.getElementById('root') as HTMLElement;

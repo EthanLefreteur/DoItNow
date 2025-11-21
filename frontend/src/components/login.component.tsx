@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../style/login2.css';
 import axios from "axios";
 
-function LoginPage2() {
+function LoginPage() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -23,6 +23,8 @@ function LoginPage2() {
         }).then(response => {
             if (response.data.token || response.data.token != '') {
                 localStorage.setItem("token", response.data.token);
+                window.location.href = 'http://localhost:5173/task';
+                return;
             } else {
                 setError('Invalid username or password.');
             }
@@ -56,4 +58,4 @@ function LoginPage2() {
     );
 }
 
-export default LoginPage2;
+export default LoginPage;
