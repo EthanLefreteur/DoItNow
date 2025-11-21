@@ -9,11 +9,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasher;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\PasswordHasher\Hasher\PasswordHasherFactory;
-use Symfony\Component\PasswordHasher\Hasher\PlaintextPasswordHasher;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 #[Route('/')]
 class SecurityController extends AbstractController {
@@ -145,6 +142,14 @@ class SecurityController extends AbstractController {
 
     #[Route(path: "/signin", name: 'app_signin', methods: ['POST'])]
     public function signin(Request $request, EntityManagerInterface $entityManager): JsonResponse {
+        $token = $request->headers->get("Authorization");
+
+        if (!SecurityController::checkSecurity($entityManager, $token, "ADMIN")) {
+            return $this->json([
+                "code_erreur" => 401,
+            ]);
+        }
+
         $identifant = $request->get("identifiant");
         $mdp = $request->get("mot_de_passe");
         $mail = $request->get("mail");

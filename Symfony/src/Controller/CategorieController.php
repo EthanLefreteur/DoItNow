@@ -21,7 +21,7 @@ class CategorieController extends AbstractController {
 
         if (!SecurityController::checkSecurity($entityManager, $token, "USER")) {
             return $this->json([
-                "code-erreur" => 401,
+                "code_erreur" => 401,
             ]);
         }
 
@@ -37,18 +37,19 @@ class CategorieController extends AbstractController {
         }
         
         return $this->json([
+            "code_erreur" => 200,
             "categories" => $json_array
         ]);
     }
 
     #[Route(path: "/new", name: 'app_categorie_new', methods: ['POST'])]
-    public function new(Request $request, CategorieRepository $categorieRepository, EntityManagerInterface $entityManager): JsonResponse
+    public function new(Request $request, EntityManagerInterface $entityManager): JsonResponse
     {
         $token = $request->headers->get("Authorization");
 
         if (!SecurityController::checkSecurity($entityManager, $token, "ADMIN")) {
             return $this->json([
-                "code-erreur" => 401,
+                "code_erreur" => 403,
             ]);
         }
 
@@ -57,7 +58,7 @@ class CategorieController extends AbstractController {
 
         if ($nom == null || $couleur == null) {
             return $this->json([
-                "code-erreur" => 400,
+                "code_erreur" => 400,
             ]);
         }
 
@@ -69,27 +70,61 @@ class CategorieController extends AbstractController {
         $entityManager->flush();
 
         return $this->json([
-            "code-erreur" => 200,
+            "code_erreur" => 200,
             "id" => 0,
         ]);
     }
 
     #[Route(path: "/delete/{id}", name: 'app_categorie_delete', methods: ['POST'])]
-    public function delete(Request $request, CategorieRepository $categorieRepository, EntityManagerInterface $entityManager): JsonResponse
+    public function delete(Request $request, EntityManagerInterface $entityManager, int $id): JsonResponse
     {
+        $token = $request->headers->get("Authorization");
+
+        if (!SecurityController::checkSecurity($entityManager, $token, "ADMIN")) {
+            return $this->json([
+                "code_erreur" => 403,
+            ]);
+        }
+
+        $categorie = $entityManager->getRepository(Categorie::class)->findOneBy(array("id" => $id));
+
+        if ($categorie == null ) {
+            return $this->json([
+                "code_erreur" => 400,
+            ]);
+        }
+
+        $entityManager->remove($categorie);
+        $entityManager->flush();
+
         return $this->json([
-            "code-erreur" => 501,
+            "code_erreur" => 200,
         ]);
     }
 
     #[Route(path: "/show/{id}", name: 'app_categorie_delete', methods: ['GET'])]
-    public function show(Request $request, CategorieRepository $categorieRepository, EntityManagerInterface $entityManager): JsonResponse
+    public function show(Request $request, EntityManagerInterface $entityManager, int $id): JsonResponse
     {
+        $token = $request->headers->get("Authorization");
+
+        if (!SecurityController::checkSecurity($entityManager, $token, "USER")) {
+            return $this->json([
+                "code_erreur" => 403,
+            ]);
+        }
+
+        $categorie = $entityManager->getRepository(Categorie::class)->findOneBy(array("id" => $id));
+
+        if ($categorie == null ) {
+            return $this->json([
+                "code_erreur" => 400,
+            ]);
+        }
+
         return $this->json([
-            "code-erreur" => 501,
-            "id" => 0,
-            "nom" => "",
-            "couleur" => "",
+            "code_erreur" => 200,
+            "nom" => $categorie->getNom(),
+            "couleur" => $categorie->getCouleur(),
         ]);
     }
 }
