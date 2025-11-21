@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
-import type { Task } from '../types/task.type';
-import { deleteTask } from './tache/deleteTask.component';
-import '../style/task.css';
+import type { Task } from '../../types/task.type';
+import { deleteTask } from './delete.component';
+import '../../style/task.css';
 
 function TaskPage() {
     const navigate = useNavigate();
@@ -73,7 +73,7 @@ function TaskPage() {
                 {tasks.map(task => (
                     <div key={task.id} className="task-row">
 
-                        <div className="task-col">{task.titreTache}</div>
+                        <div className="task-col">{task.titre}</div>
                         <div className="task-col">{task.description}</div>
                         <div className="task-col">{task.statut_id}</div>
 

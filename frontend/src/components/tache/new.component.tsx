@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../../style/taskForm.css';
+import type Categorie from "../../types/categorie.type";
+
 function AddTaskPage() {
     const navigate = useNavigate();
 
@@ -12,6 +14,8 @@ function AddTaskPage() {
     const [priorite_id, setPrioriteId] = useState(1);
     const [echeance, setEcheance] = useState('');
     const [archiver, setArchiver] = useState(false);
+
+    const [categories, setCategories] = useState([]);
 
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
@@ -24,9 +28,7 @@ function AddTaskPage() {
         const token = localStorage.getItem("token");
 
         try {
-            await axios.post(
-                "http://127.0.0.1:8000/tache/new",
-                {
+            await axios.post( "http://127.0.0.1:8000/tache/new", {
                     titre: titreTache,
                     description: description,
                     id_categorie: categorie_id,
@@ -34,11 +36,11 @@ function AddTaskPage() {
                     id_priorite: priorite_id,
                     date_echeance: echeance,
                     archiver: archiver
-                },
-                {
-                    headers: { Authorization: `Bearer ${token}` }
-                }
-            );
+                }, {
+                    headers: { 
+                        "Authorization": token 
+                    }
+                });
 
             navigate('/tache');
         } catch (err) {
@@ -51,6 +53,24 @@ function AddTaskPage() {
     const handleCancel = () => {
         navigate('/tache');
     };
+    
+    axios.get("http://127.0.0.1:8000" + "/categorie/", {
+        headers: {
+            'Authorization': localStorage.getItem("token")
+        }
+    }).then(
+        response => {
+            if (response.data.code_erreur == 200) {
+                setCategories(response.data.categories);
+            } else {
+                setError("Couldn't fetch data");
+            }
+        }
+    )
+    var categorie_array: Categorie[] = [];
+    Object.keys(categories).forEach(function(key) {
+      categorie_array.push(categories[key]);
+    });
 
     return (
         <div className="task-form-page">
@@ -95,7 +115,9 @@ function AddTaskPage() {
                             value={categorie_id}
                             onChange={(e) => setCategorieId(parseInt(e.target.value))}
                         >
-                            <option value={1}>getCategories</option>
+                            {categorie_array.map((item, key) =>
+                                <option value={item.id}>{item.nom}</option>
+                            )}
                         </select>
                     </div>
 

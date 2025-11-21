@@ -1,10 +1,12 @@
 import { createBrowserRouter } from "react-router";
 import Register from "../components/CreateUser.components";
 import Login from "../components/login.component";
-import Task from "../components/task.component";
-import AddTaskPage from "../components/tache/AddTask.component";
-import EditTaskPage from "../components/tache/EditTask.component";
-import DeleteTask from "../components/tache/deleteTask.component";
+
+import TacheShow from "../components/tache/show.page";
+import TacheIndex from "../components/tache/index.component";
+import TacheNew from "../components/tache/new.component";
+import TacheEdit from "../components/tache/edit.component";
+import TacheDelete from "../components/tache/delete.component";
 
 import CategorieIndex from "../components/categorie/index.page"
 import CategorieShow from "../components/categorie/show.page"
@@ -17,8 +19,6 @@ import StatutShow from "../components/statut/show.page"
 import UserShow from "../components/utilisateur/show.page"
 import AdminPanel from "../components/panelAdmin.component";
 
-import TacheShow from "../components/tache/show.page"
-
 const Router = createBrowserRouter([
     {
         path: "/",
@@ -30,19 +30,19 @@ const Router = createBrowserRouter([
     },
     {
         path: "/tache",
-        element: < Task />,
+        element: < TacheIndex />,
     },
     {
         path: "/tache/new",
-        element: < AddTaskPage />,
+        element: < TacheNew />,
     },
     {
         path: "/tache/edit/:id",
-        element: < EditTaskPage />,
+        element: < TacheEdit />,
     },
     {
         path: "/tache/delete/:id",
-        element: < DeleteTask />,
+        element: < TacheDelete />,
     },
     {
         path: "/tache/show/:id",
@@ -62,11 +62,11 @@ const Router = createBrowserRouter([
     },
     {
         path: "/admin/utilisateur/delete/:id",
-        element: < Task />,
+        element: < TacheIndex />,
     },
     {
         path: "/admin/utilisateur/edit/:id",
-        element: < Task />,
+        element: < TacheIndex />,
     },
     {
         path: "/categorie/",
@@ -82,15 +82,15 @@ const Router = createBrowserRouter([
     },
     {
         path: "/admin/categorie/delete/:id",
-        element: < Task />,
+        element: < TacheIndex />,
     },
     {
         path: "/admin/categorie/edit/:id",
-        element: < Task />,
+        element: < TacheIndex />,
     },
     {
         path: "/admin/priorite/new",
-        element: < Task />,
+        element: < TacheIndex />,
     },
     {
         path: "/priorite/show/:id",
@@ -98,15 +98,15 @@ const Router = createBrowserRouter([
     },
     {
         path: "/admin/priorite/delete/:id",
-        element: < Task />,
+        element: < TacheIndex />,
     },
     {
         path: "/admin/priorite/edit/:id",
-        element: < Task />,
+        element: < TacheIndex />,
     },
     {
         path: "/admin/statut/new",
-        element: < Task />,
+        element: < TacheIndex />,
     },
     {
         path: "/statut/show/:id",
@@ -114,11 +114,11 @@ const Router = createBrowserRouter([
     },
     {
         path: "/admin/statut/delete/:id",
-        element: < Task />,
+        element: < TacheIndex />,
     },
     {
         path: "/admin/statut/edit/:id",
-        element: < Task />,
+        element: < TacheIndex />,
     },
 ]);
 export { Router };
