@@ -28,6 +28,10 @@ function Show() {
         fetchCategories();
 
     }, []);
+    var arr = [];
+    Object.keys(categories).forEach(function (key) {
+        arr.push(categories[key]);
+    });
 
     return (
         <>
