@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../../style/taskForm.css';
@@ -7,7 +7,7 @@ import type Categorie from "../../types/categorie.type";
 import type Priorite from "../../types/priorite.type";
 import type Statut from "../../types/statut.type";
 
-function AddTaskPage() {
+export default function AddTaskPage() {
     const navigate = useNavigate();
 
     const [titreTache, setTitreTache] = useState('');
@@ -18,9 +18,9 @@ function AddTaskPage() {
     const [echeance, setEcheance] = useState('');
     const [archiver, setArchiver] = useState(false);
 
-    const [categories, setCategories] = useState([]);
-    const [priorites, setPriorites] = useState([]);
-    const [statuts, setStatuts] = useState([]);
+    const [categorie_array, setCategories] = useState<Categorie[]>([]);
+    const [priorite_array, setPriorites] = useState<Priorite[]>([]);
+    const [statut_array, setStatuts] = useState<Statut[]>([]);
 
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
@@ -60,57 +60,38 @@ function AddTaskPage() {
         navigate('/tache');
     };
 
-    axios.get("http://127.0.0.1:8000" + "/categorie/", {
-        headers: {
-            'Authorization': localStorage.getItem("token")
-        }
-    }).then(
-        response => {
-            if (response.data.code_erreur == 200) {
-                setCategories(response.data.categories);
+    useEffect(() => {
+        axios.get("http://127.0.0.1:8000/categorie/", {
+            headers: { 'Authorization': localStorage.getItem("token") }
+        }).then(response => {
+            if (response.data.code_erreur === 200) {
+                setCategories(Object.values(response.data.categories));
             } else {
                 setError("Couldn't fetch data");
             }
-        }
-    );
-    axios.get("http://127.0.0.1:8000" + "/priorite/", {
-        headers: {
-            'Authorization': localStorage.getItem("token")
-        }
-    }).then(
-        response => {
-            if (response.data.code_erreur == 200) {
-                setPriorites(response.data.priorites);
+        });
+
+        axios.get("http://127.0.0.1:8000/priorite/", {
+            headers: { 'Authorization': localStorage.getItem("token") }
+        }).then(response => {
+            if (response.data.code_erreur === 200) {
+                setPriorites(Object.values(response.data.priorites));
             } else {
                 setError("Couldn't fetch data");
             }
-        }
-    );
-    axios.get("http://127.0.0.1:8000" + "/statut/", {
-        headers: {
-            'Authorization': localStorage.getItem("token")
-        }
-    }).then(
-        response => {
-            if (response.data.code_erreur == 200) {
-                setStatuts(response.data.statuts);
+        });
+
+        axios.get("http://127.0.0.1:8000/statut/", {
+            headers: { 'Authorization': localStorage.getItem("token") }
+        }).then(response => {
+            if (response.data.code_erreur === 200) {
+                setStatuts(Object.values(response.data.statuts));
             } else {
                 setError("Couldn't fetch data");
             }
-        }
-    );
-    var categorie_array: Categorie[] = [];
-    var priorite_array: Priorite[] = [];
-    var statut_array: Statut[] = [];
-    Object.keys(categories).forEach(function (key: String) {
-        categorie_array.push(categories[key]);
-    });
-    Object.keys(priorites).forEach(function (key: String) {
-        priorite_array.push(priorites[key]);
-    });
-    Object.keys(statuts).forEach(function (key: String) {
-        statut_array.push(statuts[key]);
-    });
+        });
+    }, []);
+
 
     return (
         <div className="task-form-page">
@@ -219,5 +200,3 @@ function AddTaskPage() {
         </div>
     );
 }
-
-export default AddTaskPage;
