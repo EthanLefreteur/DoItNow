@@ -2,10 +2,11 @@
 
 namespace App\Controller;
 
-use App\Entity\Categorie;
-use App\Entity\Priorite;
-use App\Entity\Statut;
+use DateTime;
 use App\Entity\Tache;
+use App\Entity\Statut;
+use App\Entity\Priorite;
+use App\Entity\Categorie;
 use App\Entity\Utilisateur;
 use App\Repository\TacheRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -125,10 +126,18 @@ class TacheController extends AbstractController
         $id_statut = $request->get("id_statut");
 
 
-        if ( $titre == null || $description == null || $date_echeance == null || $archiver == null
-            || $id_categorie == null || $id_priorite == null || $id_statut == null ) {
+        if ( is_null($titre) || is_null($description) || is_null($date_echeance) || is_null($archiver)
+            || is_null($id_categorie) || is_null($id_priorite) || is_null($id_statut) ) {
             return $this->json([
                 "code_erreur" => 400,
+                "titre" => $titre,
+                "description" => $description,
+                "date_echeance" => $date_echeance,
+                "archiver" => $archiver,
+                "id_categorie" => $id_categorie,
+                "id_priorite" => $id_priorite,
+                "id_statut" => $id_statut,
+
             ]);
         }
 
@@ -139,13 +148,14 @@ class TacheController extends AbstractController
         if ($utilisateur == null || $categorie == null || $priorite == null || $statut == null) {
             return $this->json([
                 "code_erreur" => 400,
+                "index" => 2,
             ]);
         }
 
         $tache = new Tache();
         $tache->setTitre($titre);
         $tache->setDescription($description);
-        $tache->setDateEcheance($date_echeance);
+        $tache->setDateEcheance(new DateTime($date_echeance));
         $tache->setUtilisateur($utilisateur);
         $tache->setArchiver($archiver);
         $tache->setDateFinArchive($date_fin_archive);

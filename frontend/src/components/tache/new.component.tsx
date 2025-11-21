@@ -2,7 +2,10 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../../style/taskForm.css';
+
 import type Categorie from "../../types/categorie.type";
+import type Priorite from "../../types/priorite.type";
+import type Statut from "../../types/statut.type";
 
 function AddTaskPage() {
     const navigate = useNavigate();
@@ -16,6 +19,8 @@ function AddTaskPage() {
     const [archiver, setArchiver] = useState(false);
 
     const [categories, setCategories] = useState([]);
+    const [priorites, setPriorites] = useState([]);
+    const [statuts, setStatuts] = useState([]);
 
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
@@ -38,7 +43,8 @@ function AddTaskPage() {
                     archiver: archiver
                 }, {
                     headers: { 
-                        "Authorization": token 
+                        "Authorization": token,
+                        'Content-Type': 'application/x-www-form-urlencoded'
                     }
                 });
 
@@ -66,10 +72,44 @@ function AddTaskPage() {
                 setError("Couldn't fetch data");
             }
         }
-    )
+    );
+    axios.get("http://127.0.0.1:8000" + "/priorite/", {
+        headers: {
+            'Authorization': localStorage.getItem("token")
+        }
+    }).then(
+        response => {
+            if (response.data.code_erreur == 200) {
+                setPriorites(response.data.priorites);
+            } else {
+                setError("Couldn't fetch data");
+            }
+        }
+    );
+    axios.get("http://127.0.0.1:8000" + "/statut/", {
+        headers: {
+            'Authorization': localStorage.getItem("token")
+        }
+    }).then(
+        response => {
+            if (response.data.code_erreur == 200) {
+                setStatuts(response.data.statuts);
+            } else {
+                setError("Couldn't fetch data");
+            }
+        }
+    );
     var categorie_array: Categorie[] = [];
-    Object.keys(categories).forEach(function(key) {
+    var priorite_array: Priorite[] = [];
+    var statut_array: Statut[] = [];
+    Object.keys(categories).forEach(function(key: String) {
       categorie_array.push(categories[key]);
+    });
+    Object.keys(priorites).forEach(function(key: String) {
+      priorite_array.push(priorites[key]);
+    });
+    Object.keys(statuts).forEach(function(key: String) {
+      statut_array.push(statuts[key]);
     });
 
     return (
@@ -130,9 +170,9 @@ function AddTaskPage() {
                                 value={statut_id}
                                 onChange={(e) => setStatutId(parseInt(e.target.value))}
                             >
-                                <option value={1}>En cours</option>
-                                <option value={2}>Terminé</option>
-                                <option value={3}>En attente</option>
+                                {statut_array.map((item, key) =>
+                                    <option value={item.id}>{item.libelle}</option>
+                                )}
                             </select>
                         </div>
 
@@ -144,9 +184,9 @@ function AddTaskPage() {
                                 value={priorite_id}
                                 onChange={(e) => setPrioriteId(parseInt(e.target.value))}
                             >
-                                <option value={1}>Basse</option>
-                                <option value={2}>Moyenne</option>
-                                <option value={3}>Haute</option>
+                                {priorite_array.map((item, key) =>
+                                    <option value={item.id}>{item.libelle}</option>
+                                )}
                             </select>
                         </div>
 

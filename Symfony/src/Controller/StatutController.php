@@ -36,7 +36,7 @@ class StatutController extends AbstractController {
 
         return $this->json([
             "code_erreur" => 200,
-            "status" => $json_array,
+            "statuts" => $json_array,
         ]);
     }
 
