@@ -40,7 +40,7 @@ function DeleteTaskPage() {
             const token = localStorage.getItem("token");
 
             try {
-                await axios.delete(`http://127.0.0.1:8000/tache/tache/delete/${id}`, {
+                await axios.delete(`http://127.0.0.1:8000/tache/delete/${id}`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 navigate('/task');

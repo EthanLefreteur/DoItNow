@@ -1,210 +1,155 @@
-import { Component } from "react";
-import { Formik, Field, Form, ErrorMessage } from "formik";
-import * as Yup from "yup";
+import React, { useState } from "react";
 
-import AuthService from "../services/auth.service";
+export default function RegisterAdmin() {
+    const [formData, setFormData] = useState({
+        identifiant: "",
+        adresse_mail: "",
+        mdp: "",
+        nom: "",
+        prenom: "",
+        role: "user", // par défaut
+    });
 
-type Props = {};
+    const [message, setMessage] = useState("");
+    const [success, setSuccess] = useState(false);
 
-type State = {
-    username: string,
-    email: string,
-    password: string,
-    nom: string,
-    prenom: string,
-    successful: boolean,
-    message: string
-};
-
-export default class Register extends Component<Props, State> {
-    constructor(props: Props) {
-        super(props);
-        this.handleRegister = this.handleRegister.bind(this);
-
-        this.state = {
-            username: "",
-            email: "",
-            password: "",
-            nom: "",
-            prenom: "",
-            successful: false,
-            message: ""
-        };
-    }
-
-    validationSchema() {
-        return Yup.object().shape({
-            username: Yup.string()
-                .test(
-                    "len",
-                    "The username must be between 3 and 20 characters.",
-                    (val: any) =>
-                        val &&
-                        val.toString().length >= 3 &&
-                        val.toString().length <= 20
-                )
-                .required("This field is required!"),
-            email: Yup.string()
-                .email("This is not a valid email.")
-                .required("This field is required!"),
-            password: Yup.string()
-                .test(
-                    "len",
-                    "The password must be between 6 and 40 characters.",
-                    (val: any) =>
-                        val &&
-                        val.toString().length >= 6 &&
-                        val.toString().length <= 40
-                )
-                .required("This field is required!"),
-            nom: Yup.string()
-                .required("This field is required!"),
-            prenom: Yup.string()
-                .required("This field is required!"),
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
         });
-    }
+    };
 
-    handleRegister(formValue: { username: string; email: string; password: string; nom: string; prenom: string }) {
-        const { username, email, password, nom, prenom } = formValue;
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setMessage("");
+        setSuccess(false);
 
-        this.setState({
-            message: "",
-            successful: false
-        });
+        try {
+            const response = await fetch("http://127.0.0.1:8000" + "/admin/utilisateur/new", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            });
 
-        AuthService.register(
-            username,
-            email,
-            password,
-            nom,
-            prenom
-        ).then(
-            response => {
-                this.setState({
-                    message: response.data.message,
-                    successful: true
-                });
-            },
-            error => {
-                const resMessage =
-                    (error.response &&
-                        error.response.data &&
-                        error.response.data.message) ||
-                    error.message ||
-                    error.toString();
+            if (!response.ok) throw new Error("Erreur lors de la création.");
 
-                this.setState({
-                    successful: false,
-                    message: resMessage
-                });
-            }
-        );
-    }
+            setMessage("Utilisateur créé avec succès !");
+            setSuccess(true);
 
-    render() {
-        const { successful, message } = this.state;
+            setFormData({
+                identifiant: "",
+                adresse_mail: "",
+                mdp: "",
+                nom: "",
+                prenom: "",
+                role: "user",
+            });
 
-        const initialValues = {
-            username: "",
-            email: "",
-            password: "",
-            nom: "",
-            prenom: "",
-        };
+        } catch (error: any) {
+            setMessage(error.message || "Une erreur est survenue.");
+            setSuccess(false);
+        }
+    };
 
-        return (
-            <div className="col-md-12">
-                <div className="card card-container">
-                    <img
-                        src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-                        alt="profile-img"
-                        className="profile-img-card"
-                    />
+    return (
+        <div className="col-md-12">
+            <div className="card card-container">
 
-                    <Formik
-                        initialValues={initialValues}
-                        validationSchema={this.validationSchema}
-                        onSubmit={this.handleRegister}
-                    >
-                        <Form>
-                            {!successful && (
-                                <div>
-                                    <div className="form-group">
-                                        <label htmlFor="username"> Username </label>
-                                        <Field name="username" type="text" className="form-control" />
-                                        <ErrorMessage
-                                            name="username"
-                                            component="div"
-                                            className="alert alert-danger"
-                                        />
-                                    </div>
+                <img
+                    src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+                    alt="profile-img"
+                    className="profile-img-card"
+                />
 
-                                    <div className="form-group">
-                                        <label htmlFor="email"> Email </label>
-                                        <Field name="email" type="email" className="form-control" />
-                                        <ErrorMessage
-                                            name="email"
-                                            component="div"
-                                            className="alert alert-danger"
-                                        />
-                                    </div>
+                <form onSubmit={handleSubmit}>
+                    {!success && (
+                        <>
+                            <div className="form-group">
+                                <label>Identifiant</label>
+                                <input
+                                    type="text"
+                                    name="identifiant"
+                                    className="form-control"
+                                    value={formData.identifiant}
+                                    onChange={handleChange}
+                                />
+                            </div>
 
-                                    <div className="form-group">
-                                        <label htmlFor="nom"> Nom </label>
-                                        <Field name="nom" type="text" className="form-control" />
-                                        <ErrorMessage
-                                            name="nom"
-                                            component="div"
-                                            className="alert alert-danger"
-                                        />
-                                    </div>
+                            <div className="form-group">
+                                <label>Email</label>
+                                <input
+                                    type="email"
+                                    name="adresse_mail"
+                                    className="form-control"
+                                    value={formData.adresse_mail}
+                                    onChange={handleChange}
+                                />
+                            </div>
 
-                                    <div className="form-group">
-                                        <label htmlFor="prenom"> Prénom </label>
-                                        <Field name="prenom" type="text" className="form-control" />
-                                        <ErrorMessage
-                                            name="prenom"
-                                            component="div"
-                                            className="alert alert-danger"
-                                        />
-                                    </div>
+                            <div className="form-group">
+                                <label>Nom</label>
+                                <input
+                                    type="text"
+                                    name="nom"
+                                    className="form-control"
+                                    value={formData.nom}
+                                    onChange={handleChange}
+                                />
+                            </div>
 
-                                    <div className="form-group">
-                                        <label htmlFor="password"> Password </label>
-                                        <Field
-                                            name="password"
-                                            type="password"
-                                            className="form-control"
-                                        />
-                                        <ErrorMessage
-                                            name="password"
-                                            component="div"
-                                            className="alert alert-danger"
-                                        />
-                                    </div>
+                            <div className="form-group">
+                                <label>Prénom</label>
+                                <input
+                                    type="text"
+                                    name="prenom"
+                                    className="form-control"
+                                    value={formData.prenom}
+                                    onChange={handleChange}
+                                />
+                            </div>
 
-                                    <div className="form-group">
-                                        <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
-                                    </div>
-                                </div>
-                            )}
+                            <div className="form-group">
+                                <label>Mot de passe</label>
+                                <input
+                                    type="password"
+                                    name="mdp"
+                                    className="form-control"
+                                    value={formData.mdp}
+                                    onChange={handleChange}
+                                />
+                            </div>
 
-                            {message && (
-                                <div className="form-group">
-                                    <div
-                                        className={
-                                            successful ? "alert alert-success" : "alert alert-danger"
-                                        }
-                                        role="alert"
-                                    >
-                                        {message}
-                                    </div>
-                                </div>
-                            )}
-                        </Form>
-                    </Formik>
-                </div>
+                            {/* AJOUT DU ROLE */}
+                            <div className="form-group">
+                                <label>Rôle</label>
+                                <select
+                                    name="role"
+                                    className="form-control"
+                                    value={formData.role}
+                                    onChange={handleChange}
+                                >
+                                    <option value="user">Utilisateur</option>
+                                    <option value="admin">Administrateur</option>
+                                </select>
+                            </div>
+
+                            <button className="btn btn-primary btn-block" type="submit">
+                                Créer l'utilisateur
+                            </button>
+                        </>
+                    )}
+
+                    {message && (
+                        <div className={`alert ${success ? "alert-success" : "alert-danger"}`}>
+                            {message}
+                        </div>
+                    )}
+                </form>
+
             </div>
-        );
-    }
+        </div>
+    );
 }

@@ -1,0 +1,83 @@
+.user-management-page {
+    max-width: 1000px;
+    margin: 20px auto;
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+.user-management-page h1,
+.user-management-page h2 {
+    color: #2c3e50;
+}
+
+.user-form {
+    background-color: #f7f9fc;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    border: 1px solid #ddd;
+}
+
+.user-form form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+}
+
+.user-form input,
+.user-form select {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    flex: 1;
+    min-width: 150px;
+}
+
+.user-form button {
+    background-color: #3498db;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.user-form button:hover {
+    opacity: 0.85;
+}
+
+.user-list table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.user-list th,
+.user-list td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.user-list tr:hover {
+    background-color: #f0f4f8;
+}
+
+.user-list button {
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.user-list button:hover {
+    opacity: 0.85;
+}
+
+.error {
+    color: #e74c3c;
+    font-weight: bold;
+    margin-bottom: 10px;
+}

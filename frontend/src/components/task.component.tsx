@@ -4,6 +4,7 @@ import axios from "axios";
 import type { Task } from '../types/task.type';
 import { deleteTask } from './deleteTask.component';
 import '../style/task.css';
+
 function TaskPage() {
     const navigate = useNavigate();
     const [tasks, setTasks] = useState<Task[]>([]);
@@ -13,11 +14,11 @@ function TaskPage() {
     const token = localStorage.getItem("token");
 
     const loadTasks = () => {
-        axios.get("http://127.0.0.1:8000/show/{id}", {
+        axios.get("http://127.0.0.1:8000/tache/", {
             headers: { Authorization: `Bearer ${token}` }
         })
             .then(res => {
-                setTasks(res.data);
+                setTasks(res.data.taches || []);
                 setLoading(false);
             })
             .catch(() => {
@@ -29,18 +30,18 @@ function TaskPage() {
     useEffect(() => { loadTasks(); }, []);
 
     const handleAddTask = () => {
-        navigate('/add-task');
+        navigate('/tache/new');
     };
 
     const handleEditTask = (task: Task) => {
-        navigate(`/edit-task/${task.id}`);
+        navigate(`/tache/edit/${task.id}`);
     };
 
     const handleDeleteTask = (id: number) => {
         deleteTask({
             id,
-            onTaskDeleted: loadTasks,
-            onError: setError
+            onTaskDeleted: () => loadTasks(),
+            onError: (message: string) => setError(message)
         });
     };
 
@@ -72,13 +73,14 @@ function TaskPage() {
                 {tasks.map(task => (
                     <div key={task.id} className="task-row">
 
-                        <div className="task-col">{task.titre}</div>
+                        <div className="task-col">{task.titreTache}</div>
                         <div className="task-col">{task.description}</div>
                         <div className="task-col">{task.statut_id}</div>
 
                         <div className="task-actions">
                             <button className="edit-btn"
                                 onClick={() => handleEditTask(task)}>
+
                             </button>
 
                             <button className="delete-btn"

@@ -5,25 +5,17 @@ import '../style/taskForm.css';
 
 function AddTaskPage() {
     const navigate = useNavigate();
-    const [formData, setFormData] = useState({
-        titre: '',
-        description: '',
-        categorie_id: 1,
-        statut_id: 1,
-        priorite_id: 1,
-        echeance: '',
-        archiver: false
-    });
+
+    const [titreTache, setTitreTache] = useState('');
+    const [description, setDescription] = useState('');
+    const [categorie_id, setCategorieId] = useState(1);
+    const [statut_id, setStatutId] = useState(1);
+    const [priorite_id, setPrioriteId] = useState(1);
+    const [echeance, setEcheance] = useState('');
+    const [archiver, setArchiver] = useState(false);
+
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: name.includes('_id') ? parseInt(value) : value
-        }));
-    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -33,10 +25,23 @@ function AddTaskPage() {
         const token = localStorage.getItem("token");
 
         try {
-            await axios.post("http://127.0.0.1:8000/tache/new", formData, {
-                headers: { Authorization: `Bearer ${token}` }
-            });
-            navigate('/task');
+            await axios.post(
+                "http://127.0.0.1:8000/tache/new",
+                {
+                    titre: titreTache,
+                    description: description,
+                    id_categorie: categorie_id,
+                    id_statut: statut_id,
+                    id_priorite: priorite_id,
+                    date_echeance: echeance,
+                    archiver: archiver
+                },
+                {
+                    headers: { Authorization: `Bearer ${token}` }
+                }
+            );
+
+            navigate('/tache');
         } catch (err) {
             setError("Erreur lors de l'ajout de la tâche.");
         } finally {
@@ -45,7 +50,7 @@ function AddTaskPage() {
     };
 
     const handleCancel = () => {
-        navigate('/task');
+        navigate('/tache');
     };
 
     return (
@@ -56,52 +61,53 @@ function AddTaskPage() {
                 {error && <div className="error-message">{error}</div>}
 
                 <form onSubmit={handleSubmit}>
+
+                    {/* TITRE */}
                     <div className="form-group">
                         <label htmlFor="titre">Titre *</label>
                         <input
                             type="text"
                             id="titre"
-                            name="titre"
-                            value={formData.titre}
-                            onChange={handleChange}
+                            value={titreTache}
+                            onChange={(e) => setTitreTache(e.target.value)}
                             required
                             placeholder="Entrez le titre de la tâche"
                         />
                     </div>
 
+                    {/* DESCRIPTION */}
                     <div className="form-group">
                         <label htmlFor="description">Description *</label>
                         <textarea
                             id="description"
-                            name="description"
-                            value={formData.description}
-                            onChange={handleChange}
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
                             required
-                            placeholder="Entrez la description de la tâche"
+                            placeholder="Entrez la description"
                             rows={5}
                         />
                     </div>
 
+                    {/* CATEGORIE */}
                     <div className="form-group">
                         <label htmlFor="categorie_id">Catégorie</label>
                         <select
                             id="categorie_id"
-                            name="categorie_id"
-                            value={formData.categorie_id}
-                            onChange={handleChange}
+                            value={categorie_id}
+                            onChange={(e) => setCategorieId(parseInt(e.target.value))}
                         >
                             <option value={1}>getCategories</option>
                         </select>
                     </div>
 
                     <div className="form-row">
+                        {/* STATUT */}
                         <div className="form-group">
                             <label htmlFor="statut_id">Statut</label>
                             <select
                                 id="statut_id"
-                                name="statut_id"
-                                value={formData.statut_id}
-                                onChange={handleChange}
+                                value={statut_id}
+                                onChange={(e) => setStatutId(parseInt(e.target.value))}
                             >
                                 <option value={1}>En cours</option>
                                 <option value={2}>Terminé</option>
@@ -109,13 +115,13 @@ function AddTaskPage() {
                             </select>
                         </div>
 
+                        {/* PRIORITE */}
                         <div className="form-group">
                             <label htmlFor="priorite_id">Priorité</label>
                             <select
                                 id="priorite_id"
-                                name="priorite_id"
-                                value={formData.priorite_id}
-                                onChange={handleChange}
+                                value={priorite_id}
+                                onChange={(e) => setPrioriteId(parseInt(e.target.value))}
                             >
                                 <option value={1}>Basse</option>
                                 <option value={2}>Moyenne</option>
@@ -123,20 +129,20 @@ function AddTaskPage() {
                             </select>
                         </div>
 
+                        {/* ECHEANCE */}
                         <div className="form-group">
-                            <label htmlFor="Echeance">Echeance *</label>
+                            <label htmlFor="echeance">Échéance *</label>
                             <input
-                                type="text"
+                                type="date"
                                 id="echeance"
-                                name="echeance"
-                                value={formData.echeance}
-                                onChange={handleChange}
+                                value={echeance}
+                                onChange={(e) => setEcheance(e.target.value)}
                                 required
-                                placeholder="Entrez l'échance de la tâche'"
                             />
                         </div>
                     </div>
 
+                    {/* BOUTONS */}
                     <div className="form-actions">
                         <button type="button" onClick={handleCancel} className="btn-cancel">
                             Annuler
@@ -145,6 +151,7 @@ function AddTaskPage() {
                             {loading ? 'Ajout en cours...' : 'Ajouter la tâche'}
                         </button>
                     </div>
+
                 </form>
             </div>
         </div>
@@ -152,4 +159,3 @@ function AddTaskPage() {
 }
 
 export default AddTaskPage;
-
