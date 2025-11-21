@@ -11,11 +11,9 @@ interface DeleteTaskProps {
 export const deleteTask = ({ id, onTaskDeleted, onError }: DeleteTaskProps) => {
     if (!window.confirm("Supprimer cette tâche ?")) return;
 
-    const token = localStorage.getItem("token");
-
-    axios.delete(`http://127.0.0.1:8000/tache/tache/delete/${id}`, {
-        headers: { Authorization: `Bearer ${token}` }
-    })
+    axios.post(`http://127.0.0.1:8000/tache/delete/${id}`,{}, {
+            headers: { 'Authorization': localStorage.getItem("token") }
+        })
         .then(() => onTaskDeleted())
         .catch(() => onError("Erreur lors de la suppression."));
 };
@@ -28,22 +26,20 @@ function DeleteTaskPage() {
     useEffect(() => {
         const handleDelete = async () => {
             if (!id) {
-                navigate('/task');
+                navigate('/tache');
                 return;
             }
 
             if (!window.confirm("Supprimer cette tâche ?")) {
-                navigate('/task');
+                navigate('/tache');
                 return;
             }
 
-            const token = localStorage.getItem("token");
-
             try {
-                await axios.delete(`http://127.0.0.1:8000/tache/delete/${id}`, {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
-                navigate('/task');
+                await axios.post(`http://127.0.0.1:8000/tache/delete/${id}`,{}, {
+                    headers: { 'Authorization': localStorage.getItem("token") }
+                })
+                navigate('/tache');
             } catch (err) {
                 setError("Erreur lors de la suppression.");
             }
@@ -56,7 +52,7 @@ function DeleteTaskPage() {
         return (
             <div style={{ padding: '20px', textAlign: 'center' }}>
                 <p style={{ color: 'red' }}>{error}</p>
-                <button onClick={() => navigate('/task')}>Retour aux tâches</button>
+                <button onClick={() => navigate('/tache')}>Retour aux tâches</button>
             </div>
         );
     }

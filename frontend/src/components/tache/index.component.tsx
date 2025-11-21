@@ -15,7 +15,7 @@ function TaskPage() {
 
     const loadTasks = () => {
         axios.get("http://127.0.0.1:8000/tache/", {
-            headers: { Authorization: ` ${token}` }
+            headers: { Authorization: `${token}` }
         })
             .then(res => {
                 setTasks(res.data.taches || []);

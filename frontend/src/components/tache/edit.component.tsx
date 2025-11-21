@@ -16,8 +16,8 @@ function EditTaskPage() {
         const loadTask = async () => {
             const token = localStorage.getItem("token");
             try {
-                const response = await axios.get(`http://127.0.0.1:8000/tache/edit/${id}`, {
-                    headers: { Authorization: `Bearer ${token}` }
+                const response = await axios.get(`http://127.0.0.1:8000/tache/show/${id}`, {
+                    headers: { Authorization: `${token}`, },
                 });
                 setFormData(response.data);
                 setLoading(false);
@@ -52,10 +52,13 @@ function EditTaskPage() {
         const token = localStorage.getItem("token");
 
         try {
-            await axios.put(`http://127.0.0.1:8000/tache/edit/${id}`, formData, {
-                headers: { Authorization: `Bearer ${token}` }
+            await axios.post(`http://127.0.0.1:8000/tache/edit/${id}`, formData, {
+                    headers: { 
+                        Authorization: `${token}`, 
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                }
             });
-            navigate('/task');
+            navigate('/tache');
         } catch (err) {
             setError("Erreur lors de la modification de la tâche.");
         } finally {
@@ -64,7 +67,7 @@ function EditTaskPage() {
     };
 
     const handleCancel = () => {
-        navigate('/task');
+        navigate('/tache');
     };
 
     if (loading) {

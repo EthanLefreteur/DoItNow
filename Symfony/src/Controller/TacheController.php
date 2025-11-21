@@ -126,8 +126,10 @@ class TacheController extends AbstractController
         $id_statut = $request->get("id_statut");
 
 
-        if ( is_null($titre) || is_null($description) || is_null($date_echeance) || is_null($archiver)
-            || is_null($id_categorie) || is_null($id_priorite) || is_null($id_statut) ) {
+        if (
+            is_null($titre) || is_null($description) || is_null($date_echeance) || is_null($archiver)
+            || is_null($id_categorie) || is_null($id_priorite) || is_null($id_statut)
+        ) {
             return $this->json([
                 "code_erreur" => 400,
                 "titre" => $titre,
@@ -180,6 +182,7 @@ class TacheController extends AbstractController
         if (!SecurityController::checkSecurity($entityManager, $token, "USER")) {
             return $this->json([
                 "code_erreur" => 403,
+                "n" => 0,
             ]);
         }
 
@@ -203,7 +206,8 @@ class TacheController extends AbstractController
         if ($tache->getUtilisateur() != $entityManager->getRepository(Utilisateur::class)->findOneBy(array("token_jwt" => $token))) {
             return $this->json([
                 "code_erreur" => 403,
-            ]); 
+                "a" => 0,
+            ]);
         }
 
         $entityManager->remove($tache);
@@ -211,6 +215,104 @@ class TacheController extends AbstractController
 
         return $this->json([
             "code_erreur" => 200,
+        ]);
+    }
+
+    #[Route(path: "/edit/{id}", name: 'app_tache_edit', methods: ['POST'])]
+    public function edit(Request $request, EntityManagerInterface $entityManager, int $id): JsonResponse
+    {
+        $token = $request->headers->get("Authorization");
+
+        if (!SecurityController::checkSecurity($entityManager, $token, "USER")) {
+            return $this->json([
+                "code_erreur" => 403,
+            ]);
+        }
+
+        $tache = $entityManager->getRepository(Tache::class)->findOneBy(array( "id" => $id));
+
+        if ($tache === null) {
+            return $this->json([
+                "code_erreur" => 400,
+                "message" => "Tâche introuvable."
+            ]);
+        }
+
+        $currentUser = $entityManager->getRepository(Utilisateur::class)
+            ->findOneBy(["token_jwt" => $token]);
+
+        if (!SecurityController::checkSecurity($entityManager, $token, "ADMIN")) {
+            if ($tache->getUtilisateur()->getId() !== $currentUser->getId()) {
+                return $this->json([
+                    "code_erreur" => 403,
+                ]);
+            }
+        }
+
+        $titre = $request->get("titre");
+        $description = $request->get("description");
+        $date_echeance = $request->get("date_echeance");
+        $id_categorie = $request->get("id_categorie");
+        $id_priorite = $request->get("id_priorite");
+        $id_statut = $request->get("id_statut");
+        $archiver = $request->get("archiver");
+        $date_fin_archive = $request->get("date_fin_archive");
+
+        if ($titre !== null) $tache->setTitre($titre);
+        if ($description != null) $tache->setDescription($description);
+        if ($archiver !== null) $tache->setArchiver($archiver);
+
+        if ($date_fin_archive !== null) {
+            $tache->setDateFinArchive(new DateTime($date_fin_archive));
+        }
+
+        if ($date_echeance !== null) {
+            try {
+                $tache->setDateEcheance(new DateTime($date_echeance));
+            } catch (\Exception $e) {
+                return $this->json([
+                    "code_erreur" => 400,
+                ]);
+            }
+        }
+
+        if ($id_categorie !== null) {
+            $categorie = $entityManager->getRepository(Categorie::class)->find($id_categorie);
+            if ($categorie === null) {
+                return $this->json([
+                    "code_erreur" => 400,
+                ]);
+            }
+            $tache->setCategorie($categorie);
+        }
+
+        if ($id_priorite !== null) {
+            $priorite = $entityManager->getRepository(Priorite::class)->find($id_priorite);
+            if ($priorite === null) {
+                return $this->json([
+                    "code_erreur" => 400,
+                ]);
+            }
+            $tache->setPriorite($priorite);
+        }
+
+        // Update Status
+        if ($id_statut !== null) {
+            $statut = $entityManager->getRepository(Statut::class)->find($id_statut);
+            if ($statut === null) {
+                return $this->json([
+                    "code_erreur" => 400,
+                ]);
+            }
+            $tache->setStatut($statut);
+        }
+
+        $entityManager->flush();
+
+        return $this->json([
+            "code_erreur" => 200,
+            "t" => $tache->getDescription(),
+            "b" => $description,
         ]);
     }
 }

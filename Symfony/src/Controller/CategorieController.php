@@ -12,7 +12,8 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/categorie')]
-class CategorieController extends AbstractController {
+class CategorieController extends AbstractController
+{
 
     #[Route(path: "/", name: 'app_categorie_index', methods: ['GET'])]
     public function index(Request $request, EntityManagerInterface $entityManager, CategorieRepository $categorieRepository): JsonResponse
@@ -27,7 +28,8 @@ class CategorieController extends AbstractController {
 
         $json_array = array();
         foreach ($categorieRepository->findAll() as $categorie) {
-            array_push($json_array, 
+            array_push(
+                $json_array,
                 array(
                     "id" => $categorie->getId(),
                     "nom" => $categorie->getNom(),
@@ -35,7 +37,7 @@ class CategorieController extends AbstractController {
                 )
             );
         }
-        
+
         return $this->json([
             "code_erreur" => 200,
             "categories" => $json_array
@@ -88,7 +90,7 @@ class CategorieController extends AbstractController {
 
         $categorie = $entityManager->getRepository(Categorie::class)->findOneBy(array("id" => $id));
 
-        if ($categorie == null ) {
+        if ($categorie == null) {
             return $this->json([
                 "code_erreur" => 400,
             ]);
@@ -115,7 +117,7 @@ class CategorieController extends AbstractController {
 
         $categorie = $entityManager->getRepository(Categorie::class)->findOneBy(array("id" => $id));
 
-        if ($categorie == null ) {
+        if ($categorie == null) {
             return $this->json([
                 "code_erreur" => 400,
             ]);
@@ -125,6 +127,43 @@ class CategorieController extends AbstractController {
             "code_erreur" => 200,
             "nom" => $categorie->getNom(),
             "couleur" => $categorie->getCouleur(),
+        ]);
+    }
+
+    #[Route(path: "/edit/{id}", name: 'app_categorie_edit', methods: ['POST'])]
+    public function edit(Request $request, EntityManagerInterface $entityManager, int $id): JsonResponse
+    {
+        $token = $request->headers->get("Authorization");
+
+        if (!SecurityController::checkSecurity($entityManager, $token, "ADMIN")) {
+            return $this->json([
+                "code_erreur" => 403,
+            ]);
+        }
+
+        $categorie = $entityManager->getRepository(Categorie::class)->find($id);
+
+        if ($categorie === null) {
+            return $this->json([
+                "code_erreur" => 400,
+            ]);
+        }
+
+        $nom = $request->get("nom");
+        $couleur = $request->get("couleur");
+
+        if ($nom !== null) {
+            $categorie->setNom($nom);
+        }
+
+        if ($couleur !== null) {
+            $categorie->setCouleur($couleur);
+        }
+
+        $entityManager->flush();
+
+        return $this->json([
+            "code_erreur" => 200,
         ]);
     }
 }
