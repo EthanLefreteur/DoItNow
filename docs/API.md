@@ -429,6 +429,7 @@
 + Json {
     "code_erreur": int,
     "token": token-jwt (string),
+    "isAdmin": bool,
 }
 
 ## /logout

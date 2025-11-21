@@ -23,6 +23,7 @@ function LoginPage() {
         }).then(response => {
             if (response.data.token || response.data.token != '') {
                 localStorage.setItem("token", response.data.token);
+                localStorage.setItem("isAdmin", response.data.isAdmin);
                 window.location.href = 'http://localhost:5173/tache';
                 return;
             } else {
