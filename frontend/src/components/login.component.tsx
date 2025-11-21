@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import '../style/login2.css';
 import axios from "axios";
-
+import "../style/login.css";
 function LoginPage() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -21,41 +20,63 @@ function LoginPage() {
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         }).then(response => {
-            if (response.data.token || response.data.token != '') {
+            if (response.data.token || response.data.token !== '') {
                 localStorage.setItem("token", response.data.token);
                 localStorage.setItem("isAdmin", response.data.isAdmin);
                 window.location.href = 'http://localhost:5173/tache';
-                return;
             } else {
                 setError('Invalid username or password.');
             }
-        })
+        }).catch(err => {
+            setError('Connection error. Please try again.');
+            console.error(err);
+        });
     };
 
     return (
-        <>
-            <div className="login-page">
-                <h1>Login</h1>
-                <div className="form-group">
-                    <input
-                        type="text"
-                        placeholder="Username"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                    />
-                </div>
-                <div className="form-group">
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                    />
-                </div>
-                {error && <p className="error">{error}</p>}
-                <button onClick={handleLogin}>Login</button>
+        <div className="split-screen">
+            {/* Partie Gauche : Accueil */}
+            <div className="left-pane">
+                <h1>Do It Now</h1>
             </div>
-        </>
+
+            {/* Partie Droite : Formulaire */}
+            <div className="right-pane">
+                <div className="login-card">
+                    <div className="login-header">
+                        <h2>Login</h2>
+                    </div>
+
+                    <div className="form-group">
+                        <input
+                            type="text"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            required
+                            placeholder="Username"
+                        />
+                    </div>
+
+                    <div className="form-group">
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                            placeholder="Password"
+                        />
+                    </div>
+
+                    {error && <p className="error">{error}</p>}
+
+                    <div className="login-btn-container">
+                        <button className="login-btn" onClick={handleLogin}>
+                            Login
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 }
 

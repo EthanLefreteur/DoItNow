@@ -33,20 +33,20 @@ function AddTaskPage() {
         const token = localStorage.getItem("token");
 
         try {
-            await axios.post( "http://127.0.0.1:8000/tache/new", {
-                    titre: titreTache,
-                    description: description,
-                    id_categorie: categorie_id,
-                    id_statut: statut_id,
-                    id_priorite: priorite_id,
-                    date_echeance: echeance,
-                    archiver: archiver
-                }, {
-                    headers: { 
-                        "Authorization": token,
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    }
-                });
+            await axios.post("http://127.0.0.1:8000/tache/new", {
+                titre: titreTache,
+                description: description,
+                id_categorie: categorie_id,
+                id_statut: statut_id,
+                id_priorite: priorite_id,
+                date_echeance: echeance,
+                archiver: archiver
+            }, {
+                headers: {
+                    "Authorization": token,
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            });
 
             navigate('/tache');
         } catch (err) {
@@ -59,7 +59,7 @@ function AddTaskPage() {
     const handleCancel = () => {
         navigate('/tache');
     };
-    
+
     axios.get("http://127.0.0.1:8000" + "/categorie/", {
         headers: {
             'Authorization': localStorage.getItem("token")
@@ -102,14 +102,14 @@ function AddTaskPage() {
     var categorie_array: Categorie[] = [];
     var priorite_array: Priorite[] = [];
     var statut_array: Statut[] = [];
-    Object.keys(categories).forEach(function(key: String) {
-      categorie_array.push(categories[key]);
+    Object.keys(categories).forEach(function (key: String) {
+        categorie_array.push(categories[key]);
     });
-    Object.keys(priorites).forEach(function(key: String) {
-      priorite_array.push(priorites[key]);
+    Object.keys(priorites).forEach(function (key: String) {
+        priorite_array.push(priorites[key]);
     });
-    Object.keys(statuts).forEach(function(key: String) {
-      statut_array.push(statuts[key]);
+    Object.keys(statuts).forEach(function (key: String) {
+        statut_array.push(statuts[key]);
     });
 
     return (
@@ -215,6 +215,7 @@ function AddTaskPage() {
 
                 </form>
             </div>
+
         </div>
     );
 }

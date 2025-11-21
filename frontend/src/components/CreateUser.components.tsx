@@ -7,7 +7,7 @@ export default function RegisterAdmin() {
         mdp: "",
         nom: "",
         prenom: "",
-        role: "user", // par défaut
+        role: "", // par défaut
     });
 
     const [message, setMessage] = useState("");

@@ -1,0 +1,87 @@
+/* --- Layout Global --- */
+.split-screen {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    font-family: 'Arial', sans-serif;
+    overflow: hidden;
+}
+
+/* Partie Gauche (Titre) */
+.left-pane {
+    flex: 1;
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 2px solid white;
+}
+
+.left-pane h1 {
+    font-size: 4rem;
+    color: white !important;
+    /* Force le titre en blanc */
+}
+
+/* Partie Droite (Contenu) */
+.right-pane {
+    flex: 1;
+    background-color: white !important;
+    /* Force le fond blanc */
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* --- Styles du Texte --- */
+
+.user-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.full-width {
+    grid-column: span 2;
+}
+
+.info-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+/* LE LABEL (ex: "Identifiant") DOIT ÊTRE NOIR */
+.label {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: black !important;
+    /* <-- TRÈS IMPORTANT */
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+/* LA VALEUR (ex: "toto") DOIT ÊTRE BLANCHE SUR FOND NOIR */
+.value-box {
+    background-color: black !important;
+    /* <-- Le fond noir */
+    color: white !important;
+    /* <-- Le texte blanc */
+    padding: 15px;
+    font-size: 1rem;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    border-radius: 4px;
+    /* Un petit arrondi pour faire propre */
+}
+
+.error-msg {
+    color: red;
+    font-weight: bold;
+}

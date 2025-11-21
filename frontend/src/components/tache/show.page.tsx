@@ -3,19 +3,19 @@ import axios from "axios";
 
 function Show() {
     const [error, setError] = useState('');
-    let [titre, setTitre]  = useState('');
-    let [description, setDesc]  = useState('');
-    let [date_echeance, setDateEcheance]  = useState('');
-    let [id_utilisateur, setIdUser]  = useState('');
-    let [archiver, setArchiver]  = useState('');
-    let [date_fin_archive, setDataFinArchive]  = useState('');
-    let [id_categorie, setIdCategorie]  = useState('');
-    let [libelle_categorie, setLibelleCategorie]  = useState('');
-    let [couleur_categorie, setCouleurCategorie]  = useState('');
-    let [id_priorite, setIdPriorite]  = useState('');
-    let [libelle_priorite, setLibellePriorite]  = useState('');
-    let [id_statut, setIdStatut]  = useState('');
-    let [libelle_statut, setLibelleStatut]  = useState('');
+    let [titre, setTitre] = useState('');
+    let [description, setDesc] = useState('');
+    let [date_echeance, setDateEcheance] = useState('');
+    let [id_utilisateur, setIdUser] = useState('');
+    let [archiver, setArchiver] = useState('');
+    let [date_fin_archive, setDataFinArchive] = useState('');
+    let [id_categorie, setIdCategorie] = useState('');
+    let [libelle_categorie, setLibelleCategorie] = useState('');
+    let [couleur_categorie, setCouleurCategorie] = useState('');
+    let [id_priorite, setIdPriorite] = useState('');
+    let [libelle_priorite, setLibellePriorite] = useState('');
+    let [id_statut, setIdStatut] = useState('');
+    let [libelle_statut, setLibelleStatut] = useState('');
 
     let id = parseInt(window.location.href.substring(window.location.href.lastIndexOf('/') + 1));
 

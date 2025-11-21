@@ -51,48 +51,77 @@ function TaskPage() {
     };
 
     return (
-        <div className="task-page">
+        <div className="split-screen">
 
-            <div className="header">
-                <h1>Mes Tâches</h1>
-                <button className="logout-btn" onClick={logout}>Déconnexion</button>
+            {/* Partie Gauche : Statique "Tache" */}
+            <div className="left-pane">
+                <h1>Tache</h1>
             </div>
 
-            <div className="top-bar">
-                <span>Titre</span>
-                <span>Description</span>
-                <span>Status</span>
-                <span>Actions</span>
-                <button className="add-btn" onClick={handleAddTask}>Ajouter tâche</button>
-            </div>
+            {/* Partie Droite : La liste */}
+            <div className="right-pane">
 
-            {error && <p className="error">{error}</p>}
-            {loading && <p>Chargement...</p>}
+                {/* En-tête : Titre + Logout */}
+                <div className="header-container">
+                    <h2>Mes Tâches</h2>
+                    <button className="btn-black" onClick={logout}>Déconnexion</button>
+                </div>
 
-            <div className="task-list">
-                {tasks.map(task => (
-                    <div key={task.id} className="task-row">
+                {/* Bouton Ajouter (placé au dessus de la liste) */}
+                <div className="add-btn-container">
+                    <button className="btn-black" onClick={handleAddTask}>
+                        + Ajouter tâche
+                    </button>
+                </div>
 
-                        <div className="task-col">{task.titre}</div>
-                        <div className="task-col">{task.description}</div>
-                        <div className="task-col">{task.statut_id}</div>
+                {/* Messages d'état */}
+                {error && <p className="error-msg">{error}</p>}
+                {loading && <p className="loading-msg">Chargement...</p>}
 
-                        <div className="task-actions">
-                            <button className="edit-btn"
-                                onClick={() => handleEditTask(task)}>
+                {/* En-têtes des colonnes */}
+                <div className="list-grid list-headers">
+                    <span>Titre</span>
+                    <span>Description</span>
+                    <span>Status</span>
+                    <span style={{ textAlign: 'right' }}>Actions</span>
+                </div>
 
-                            </button>
+                {/* Liste des tâches (Barres noires) */}
+                <div className="task-list">
+                    {tasks.map(task => (
+                        <div key={task.id} className="list-grid task-row-black">
 
-                            <button className="delete-btn"
-                                onClick={() => handleDeleteTask(task.id)}>
+                            <div className="task-col" title={task.titre}>
+                                {task.titre}
+                            </div>
 
-                            </button>
+                            <div className="task-col" title={task.description}>
+                                {task.description}
+                            </div>
+
+                            <div className="task-col">
+                                {task.statut_id}
+                            </div>
+
+                            <div className="task-actions">
+                                <button
+                                    className="action-btn"
+                                    onClick={() => handleEditTask(task)}
+                                >
+                                    Edit
+                                </button>
+
+                                <button
+                                    className="action-btn"
+                                    onClick={() => handleDeleteTask(task.id)}
+                                >
+                                    Suppr
+                                </button>
+                            </div>
                         </div>
-
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
-
         </div>
     );
 }

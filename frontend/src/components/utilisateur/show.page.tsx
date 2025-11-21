@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from "axios";
+import '../../style/userShow.css';
 
 function Show() {
     const [error, setError] = useState('');
@@ -30,30 +31,63 @@ function Show() {
     )
 
     return (
-        <>
-            <h1> Statut </h1>
-            <div>
-                Id: {id}
+        <div className="split-screen">
+
+            {/* Partie Gauche */}
+            <div className="left-pane">
+                { }
+                <h1>User</h1>
             </div>
-            <div>
-                Identifiant: {identifiant}
+
+            {/* Partie Droite */}
+            <div className="right-pane">
+
+                <div className="user-grid">
+
+                    {/* ID */}
+                    <div className="info-group">
+                        <span className="label">ID</span>
+                        <div className="value-box">{id}</div>
+                    </div>
+
+                    {/* Identifiant */}
+                    <div className="info-group">
+                        <span className="label">Identifiant</span>
+                        <div className="value-box">{identifiant || "-"}</div>
+                    </div>
+
+                    {/* Nom */}
+                    <div className="info-group">
+                        <span className="label">Nom</span>
+                        <div className="value-box">{nom || "-"}</div>
+                    </div>
+
+                    {/* Prénom */}
+                    <div className="info-group">
+                        <span className="label">Prénom</span>
+                        <div className="value-box">{prenom || "-"}</div>
+                    </div>
+
+                    {/* Email (Pleine largeur) */}
+                    <div className="info-group full-width">
+                        <span className="label">E-Mail</span>
+                        <div className="value-box">{mail || "-"}</div>
+                    </div>
+
+                    { }
+                    <div className="info-group full-width">
+                        <span className="label">Mot de passe (Hash)</span>
+                        <div className="value-box" style={{ fontSize: '0.8rem' }}>
+                            {mdp || "********"}
+                        </div>
+                    </div>
+
+                    {/* Erreur */}
+                    {error && <div className="error-msg">{error}</div>}
+
+                </div>
             </div>
-            <div>
-                Mot de passe (hash): {mdp}
-            </div>
-            <div>
-                E-Mail: {mail}
-            </div>
-            <div>
-                Nom: {nom}
-            </div>
-            <div>
-                Prenom: {prenom}
-            </div>
-            <div>
-                {error}
-            </div>
-        </>
+        </div>
     );
 }
 
