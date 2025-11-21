@@ -20,8 +20,8 @@ function Show() {
     )
 
     var arr = [];
-    Object.keys(categories).forEach(function(key) {
-      arr.push(categories[key]);
+    Object.keys(categories).forEach(function (key) {
+        arr.push(categories[key]);
     });
 
     return (

@@ -1,0 +1,102 @@
+/* --- Layout Global --- */
+.split-screen {
+    display: flex;
+    height: 100vh;
+    width: 100vw;
+    font-family: 'Arial', sans-serif;
+    overflow: hidden;
+}
+
+/* Partie Gauche (Titre) */
+.left-pane {
+    flex: 1;
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-right: 2px solid white;
+}
+
+.left-pane h1 {
+    font-size: 4rem;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+/* Partie Droite (Liste) */
+.right-pane {
+    flex: 1;
+    background-color: white;
+    padding: 50px;
+    overflow-y: auto;
+    /* Scroll si beaucoup de catégories */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header de la liste */
+.list-header {
+    margin-bottom: 30px;
+    border-bottom: 2px solid black;
+    padding-bottom: 10px;
+}
+
+.list-header h2 {
+    font-size: 2rem;
+    margin: 0;
+    color: black;
+}
+
+/* --- Style des lignes de catégorie --- */
+.category-list {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.category-row {
+    background-color: black;
+    color: white;
+    padding: 20px;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.2s;
+}
+
+.category-row:hover {
+    transform: scale(1.01);
+    /* Petit effet au survol */
+}
+
+.cat-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.cat-label {
+    font-size: 0.8rem;
+    color: #ccc;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+}
+
+.cat-value {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* Pastille de couleur */
+.color-indicator {
+    width: 30px;
+    height: 30px;
+    border: 2px solid white;
+    border-radius: 50%;
+}
+
+.error-msg {
+    color: red;
+    font-weight: bold;
+}

@@ -16,8 +16,8 @@ import PrioriteShow from "../components/priorite/show.page"
 
 import StatutShow from "../components/statut/show.page"
 
-import UserShow from "../components/utilisateur/show.page"
 import AdminPanel from "../components/panelAdmin.component";
+import ShowUser from "../components/utilisateur/show.page";
 
 const Router = createBrowserRouter([
     {
@@ -58,7 +58,7 @@ const Router = createBrowserRouter([
     },
     {
         path: "/admin/utilisateur/show/:id",
-        element: < UserShow />,
+        element: < ShowUser />,
     },
     {
         path: "/admin/utilisateur/delete/:id",
