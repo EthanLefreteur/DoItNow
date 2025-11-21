@@ -17,6 +17,7 @@
     "formik": "^2.4.9",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-login-page": "^1.0.6",
     "react-router-dom": "^7.9.6",
     "web-vitals": "^5.1.0",
     "yup": "^1.7.1"

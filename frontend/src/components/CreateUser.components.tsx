@@ -10,6 +10,8 @@ type State = {
     username: string,
     email: string,
     password: string,
+    nom: string,
+    prenom: string,
     successful: boolean,
     message: string
 };
@@ -23,6 +25,8 @@ export default class Register extends Component<Props, State> {
             username: "",
             email: "",
             password: "",
+            nom: "",
+            prenom: "",
             successful: false,
             message: ""
         };
@@ -53,11 +57,15 @@ export default class Register extends Component<Props, State> {
                         val.toString().length <= 40
                 )
                 .required("This field is required!"),
+            nom: Yup.string()
+                .required("This field is required!"),
+            prenom: Yup.string()
+                .required("This field is required!"),
         });
     }
 
-    handleRegister(formValue: { username: string; email: string; password: string }) {
-        const { username, email, password } = formValue;
+    handleRegister(formValue: { username: string; email: string; password: string; nom: string; prenom: string }) {
+        const { username, email, password, nom, prenom } = formValue;
 
         this.setState({
             message: "",
@@ -67,7 +75,9 @@ export default class Register extends Component<Props, State> {
         AuthService.register(
             username,
             email,
-            password
+            password,
+            nom,
+            prenom
         ).then(
             response => {
                 this.setState({
@@ -98,6 +108,8 @@ export default class Register extends Component<Props, State> {
             username: "",
             email: "",
             password: "",
+            nom: "",
+            prenom: "",
         };
 
         return (
@@ -132,6 +144,26 @@ export default class Register extends Component<Props, State> {
                                         <Field name="email" type="email" className="form-control" />
                                         <ErrorMessage
                                             name="email"
+                                            component="div"
+                                            className="alert alert-danger"
+                                        />
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label htmlFor="nom"> Nom </label>
+                                        <Field name="nom" type="text" className="form-control" />
+                                        <ErrorMessage
+                                            name="nom"
+                                            component="div"
+                                            className="alert alert-danger"
+                                        />
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label htmlFor="prenom"> Prénom </label>
+                                        <Field name="prenom" type="text" className="form-control" />
+                                        <ErrorMessage
+                                            name="prenom"
                                             component="div"
                                             className="alert alert-danger"
                                         />

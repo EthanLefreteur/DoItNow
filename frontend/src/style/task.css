@@ -1,0 +1,169 @@
+/* ======== GLOBAL PAGE LAYOUT ======== */
+
+/* Fond clair, centrage global */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    /* Fond super clair */
+    margin: 0;
+    padding: 0;
+
+    display: flex;
+    justify-content: center;
+    /* Centre horizontalement */
+    align-items: flex-start;
+    /* Centre légèrement vers le haut */
+    min-height: 100vh;
+}
+
+/* Conteneur principal */
+.task-page {
+    width: 90%;
+    max-width: 1000px;
+    margin-top: 40px;
+    background-color: transparent;
+}
+
+/* ======== HEADER ======== */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.header h1 {
+    font-size: 28px;
+    font-weight: bold;
+    color: #333;
+}
+
+.logout-btn {
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.2s;
+}
+
+.logout-btn:hover {
+    background-color: #e04848;
+}
+
+/* ======== TOP BAR (Titre / Descr / Status / Actions) ======== */
+
+.top-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 130px;
+    align-items: center;
+    padding: 12px;
+    background: #ffffff;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    font-weight: bold;
+    gap: 10px;
+
+    border: 1px solid #ddd;
+    color: #444;
+}
+
+.add-btn {
+    grid-column: 4 / 5;
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    padding: 7px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: 0.2s;
+}
+
+.add-btn:hover {
+    background-color: #4ea84e;
+}
+
+/* ======== TASK LIST ======== */
+
+.task-list {
+    margin-top: 10px;
+}
+
+/* Chaque ligne */
+.task-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 130px;
+    align-items: center;
+
+    padding: 14px;
+    background: #ffffff;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+
+    margin-bottom: 12px;
+    transition: 0.2s;
+}
+
+.task-row:hover {
+    background: #fafafa;
+}
+
+.task-col {
+    padding: 4px;
+    color: #333;
+}
+
+/* Icônes actions */
+.task-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* Bouton éditer */
+.edit-btn {
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 18px;
+
+    background-color: #f0ad4e;
+    color: white;
+    transition: 0.2s;
+}
+
+.edit-btn:hover {
+    background-color: #de9b3d;
+}
+
+/* Bouton supprimer */
+.delete-btn {
+    width: 36px;
+    height: 36px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 18px;
+
+    background-color: #ff6b6b;
+    color: white;
+    transition: 0.2s;
+}
+
+.delete-btn:hover {
+    background-color: #e04848;
+}
+
+/* ======== ERROR MESSAGE ======== */
+
+.error {
+    color: red;
+    margin-top: 10px;
+    font-size: 14px;
+}

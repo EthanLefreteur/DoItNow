@@ -1,46 +1,39 @@
 import { createBrowserRouter } from "react-router";
-import BoardAdmin from "../components/board-moderator.component";
-import BoardModerator from "../components/board-moderator.component";
-import BoardUser from "../components/board-user.component";
-import Home from "../components/home.component";
-import Login from "../components/login.component";
-import Profile from "../components/profile.component";
-import Register from "../components/register.component";
-import App from "../App";
+import Register from "../components/CreateUser.components";
+import Login from "../components/login2.component";
+import Task from "../components/task.component";
+import AddTaskPage from "../components/addTask.component";
+import EditTaskPage from "../components/editTask.component";
+import DeleteTask from "../components/deleteTask.component";
 
-const router = createBrowserRouter([
+const Router = createBrowserRouter([
     {
         path: "/",
-        element: < App />,
-    },
-    {
-        path: "/home",
-        element: < Home />,
+        element: < Login />,
     },
     {
         path: "/login",
         element: < Login />,
     },
     {
-        path: "/register",
+        path: "/task",
+        element: < Task />,
+    },
+    {
+        path: "/add-task",
+        element: < AddTaskPage />,
+    },
+    {
+        path: "/edit-task/{id}",
+        element: < EditTaskPage />,
+    },
+    {
+        path: "/delete-task/{id}",
+        element: < DeleteTask />,
+    },
+    {
+        path: "/CreateUser",
         element: < Register />,
-    },
-    {
-        path: "/profile",
-        element: < Profile />,
-    },
-    {
-        path: "/user",
-        element: < BoardUser />,
-    },
-    {
-        path: "/mod",
-        element: < BoardModerator />,
-    },
-    {
-        path: "/admin",
-        element: < BoardAdmin />,
-    },
-
+    }
 ]);
-export { router };
+export { Router };
