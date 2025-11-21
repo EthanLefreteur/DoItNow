@@ -6,6 +6,7 @@ import AddTaskPage from "../components/tache/AddTask.component";
 import EditTaskPage from "../components/tache/EditTask.component";
 import DeleteTask from "../components/tache/deleteTask.component";
 
+import CategorieIndex from "../components/categorie/index.page"
 import CategorieShow from "../components/categorie/show.page"
 import AddCategorie from "../components/categorie/addCategorie";
 
@@ -66,6 +67,10 @@ const Router = createBrowserRouter([
     {
         path: "/admin/utilisateur/edit/:id",
         element: < Task />,
+    },
+    {
+        path: "/categorie/",
+        element: < CategorieIndex />,
     },
     {
         path: "/admin/categorie/new",

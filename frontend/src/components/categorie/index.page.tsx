@@ -33,7 +33,6 @@ function Show() {
                         <div>Libelle: {item.nom}</div>
                         <div>Couleur: {item.couleur}</div>
                     </li>
-                    
                 )}
             </ul>
             <div>
