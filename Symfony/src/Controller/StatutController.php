@@ -45,7 +45,7 @@ class StatutController extends AbstractController {
     {
         $token = $request->headers->get("Authorization");
 
-        if (!SecurityController::checkSecurity($entityManager, $token, "ADMIN")) {
+        if (!SecurityController::checkSecurity($entityManager, $token, "USER")) {
             return $this->json([
                 "code_erreur" => 403,
             ]);

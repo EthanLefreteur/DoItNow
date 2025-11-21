@@ -38,4 +38,34 @@ class UtilisateurController extends AbstractController {
             "utilisateurs" => $json_array
         ]);
     }
+
+    #[Route(path: "/show/{id}", name: 'app_utilisateur_show', methods: ['GET'])]
+    public function show(Request $request, EntityManagerInterface $entityManager, int $id): JsonResponse
+    {
+        $token = $request->headers->get("Authorization");
+
+        if (!SecurityController::checkSecurity($entityManager, $token, "ADMIN")) {
+            return $this->json([
+                "code_erreur" => 403,
+            ]);
+        }
+
+        $utilisateur = $entityManager->getRepository(Utilisateur::class)->findOneBy(array("id" => $id));
+
+        if ($utilisateur == null) {
+            return $this->json([
+                "code_erreur" => 400,
+            ]);
+        }
+
+        return $this->json([
+            "code_erreur" => 200,
+            "identifiant" => $utilisateur->getIdentifiant(),
+            "mot_de_passe" => $utilisateur->getMdp(),
+            "mail" => $utilisateur->getAdresseMail(),
+            "nom" => $utilisateur->getNom(),
+            "prenom" => $utilisateur->getPrenom(),
+            
+        ]);
+    }
 }

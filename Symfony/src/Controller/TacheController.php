@@ -48,8 +48,8 @@ class TacheController extends AbstractController
                     "couleur_categorie" => $tache->getCategorie()->getCouleur(),
                     "id_priorite" => $tache->getPriorite()->getId(),
                     "libelle_priorite" => $tache->getPriorite()->getLibelle(),
-                    "id_statue" => $tache->getStatut()->getId(),
-                    "libelle_statue" => $tache->getStatut()->getLibelle(),
+                    "id_statut" => $tache->getStatut()->getId(),
+                    "libelle_statut" => $tache->getStatut()->getLibelle(),
                 )
             );
         }
@@ -92,8 +92,8 @@ class TacheController extends AbstractController
             "couleur_categorie" => $tache->getCategorie()->getCouleur(),
             "id_priorite" => $tache->getPriorite()->getId(),
             "libelle_priorite" => $tache->getPriorite()->getLibelle(),
-            "id_statue" => $tache->getStatut()->getId(),
-            "libelle_statue" => $tache->getStatut()->getLibelle(),
+            "id_statut" => $tache->getStatut()->getId(),
+            "libelle_statut" => $tache->getStatut()->getLibelle(),
         ]);
     }
 

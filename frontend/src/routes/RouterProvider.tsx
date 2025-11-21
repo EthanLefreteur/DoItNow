@@ -6,6 +6,16 @@ import AddTaskPage from "../components/addTask.component";
 import EditTaskPage from "../components/editTask.component";
 import DeleteTask from "../components/deleteTask.component";
 
+import CategorieShow from "../components/categorie/show.page"
+
+import PrioriteShow from "../components/priorite/show.page"
+
+import StatutShow from "../components/statut/show.page"
+
+import UserShow from "../components/utilisateur/show.page"
+
+import TacheShow from "../components/tache/show.page"
+
 const Router = createBrowserRouter([
     {
         path: "/",
@@ -24,27 +34,31 @@ const Router = createBrowserRouter([
         element: < AddTaskPage />,
     },
     {
-        path: "/tache/edit/{id}",
+        path: "/tache/edit/:id",
         element: < EditTaskPage />,
     },
     {
-        path: "/tache/delete/{id}",
+        path: "/tache/delete/:id",
         element: < DeleteTask />,
+    },
+    {
+        path: "/tache/show/:id",
+        element: < TacheShow />,
     },
     {
         path: "/admin/utilisateur/new",
         element: < Register />,
     },
     {
-        path: "/admin/utilisateur/show/{id}",
+        path: "/admin/utilisateur/show/:id",
+        element: < UserShow />,
+    },
+    {
+        path: "/admin/utilisateur/delete/:id",
         element: < Task />,
     },
     {
-        path: "/admin/utilisateur/delete/{id}",
-        element: < Task />,
-    },
-    {
-        path: "/admin/utilisateur/edit/{id}",
+        path: "/admin/utilisateur/edit/:id",
         element: < Task />,
     },
     {
@@ -52,15 +66,15 @@ const Router = createBrowserRouter([
         element: < Task />,
     },
     {
-        path: "/categorie/show/{id}",
+        path: "/categorie/show/:id",
+        element: < CategorieShow />,
+    },
+    {
+        path: "/admin/categorie/delete/:id",
         element: < Task />,
     },
     {
-        path: "/admin/categorie/delete/{id}",
-        element: < Task />,
-    },
-    {
-        path: "/admin/categorie/edit/{id}",
+        path: "/admin/categorie/edit/:id",
         element: < Task />,
     },
     {
@@ -68,15 +82,15 @@ const Router = createBrowserRouter([
         element: < Task />,
     },
     {
-        path: "/priorite/show/{id}",
+        path: "/priorite/show/:id",
+        element: < PrioriteShow />,
+    },
+    {
+        path: "/admin/priorite/delete/:id",
         element: < Task />,
     },
     {
-        path: "/admin/priorite/delete/{id}",
-        element: < Task />,
-    },
-    {
-        path: "/admin/priorite/edit/{id}",
+        path: "/admin/priorite/edit/:id",
         element: < Task />,
     },
     {
@@ -84,15 +98,15 @@ const Router = createBrowserRouter([
         element: < Task />,
     },
     {
-        path: "/statut/show/{id}",
+        path: "/statut/show/:id",
+        element: < StatutShow />,
+    },
+    {
+        path: "/admin/statut/delete/:id",
         element: < Task />,
     },
     {
-        path: "/admin/statut/delete/{id}",
-        element: < Task />,
-    },
-    {
-        path: "/admin/statut/edit/{id}",
+        path: "/admin/statut/edit/:id",
         element: < Task />,
     },
 ]);

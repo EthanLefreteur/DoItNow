@@ -143,7 +143,6 @@
 
 <red> Sortie
 + Json {
-    "id": int,
     "titre": string,
     "description": string,
     "date_echeance": string (format datetime),
@@ -155,8 +154,8 @@
     "couleur_categorie": string,
     "id_priorite": int,
     "libelle_priorite": string,
-    "id_statue": int,
-    "libelle_statue": string
+    "id_statut": int,
+    "libelle_statut": string
 }
 
 ### /edit/{id}
