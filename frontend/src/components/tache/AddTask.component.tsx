@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import '../style/taskForm.css';
-
+import '../../style/taskForm.css';
 function AddTaskPage() {
     const navigate = useNavigate();
 

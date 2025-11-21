@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import type { Task } from '../types/task.type';
-import '../style/taskForm.css';
+import type { Task } from '../../types/task.type';
+import '../../style/taskForm.css';
 
 function EditTaskPage() {
     const navigate = useNavigate();

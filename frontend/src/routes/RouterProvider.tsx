@@ -2,17 +2,19 @@ import { createBrowserRouter } from "react-router";
 import Register from "../components/CreateUser.components";
 import Login from "../components/login.component";
 import Task from "../components/task.component";
-import AddTaskPage from "../components/addTask.component";
-import EditTaskPage from "../components/editTask.component";
-import DeleteTask from "../components/deleteTask.component";
+import AddTaskPage from "../components/tache/AddTask.component";
+import EditTaskPage from "../components/tache/EditTask.component";
+import DeleteTask from "../components/tache/deleteTask.component";
 
 import CategorieShow from "../components/categorie/show.page"
+import AddCategorie from "../components/categorie/addCategorie";
 
 import PrioriteShow from "../components/priorite/show.page"
 
 import StatutShow from "../components/statut/show.page"
 
 import UserShow from "../components/utilisateur/show.page"
+import AdminPanel from "../components/panelAdmin.component";
 
 import TacheShow from "../components/tache/show.page"
 
@@ -50,6 +52,10 @@ const Router = createBrowserRouter([
         element: < Register />,
     },
     {
+        path: "/admin/panel",
+        element: < AdminPanel />,
+    },
+    {
         path: "/admin/utilisateur/show/:id",
         element: < UserShow />,
     },
@@ -63,7 +69,7 @@ const Router = createBrowserRouter([
     },
     {
         path: "/admin/categorie/new",
-        element: < Task />,
+        element: < AddCategorie />,
     },
     {
         path: "/categorie/show/:id",

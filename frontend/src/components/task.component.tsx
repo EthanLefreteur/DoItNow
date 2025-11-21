@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios";
 import type { Task } from '../types/task.type';
-import { deleteTask } from './deleteTask.component';
+import { deleteTask } from './tache/deleteTask.component';
 import '../style/task.css';
 
 function TaskPage() {

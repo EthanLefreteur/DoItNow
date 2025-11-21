@@ -15,18 +15,45 @@ export default function AdminPanel() {
                 <section>
                     <h2>Gestion des utilisateurs</h2>
                     <p>Consulter, ajouter ou supprimer les utilisateurs.</p>
-                    <button className="btn-section" onClick={() => navigate("/admin/utilisateur/new")}>
+
+                    <button
+                        className="btn-section"
+                        onClick={() => navigate("/admin/utilisateur/new")}
+                    >
                         Ajouter un Utilisateur
                     </button>
 
+                    <button
+                        className="btn-section"
+                        onClick={() => navigate("/admin/utilisateur/show/:id")}
+                        style={{ marginLeft: '10px', backgroundColor: '#2ecc71' }}
+                    >
+                        Voir les Utilisateurs
+                    </button>
                 </section>
 
                 {/* Gestion catégories */}
                 <section>
                     <h2>Gestion des catégories</h2>
                     <p>Créer, modifier ou supprimer les catégories utilisées pour les tâches.</p>
-                    <button className="btn-section" onClick={() => navigate("/admin/categories")}>
-                        Gérer les catégories
+                    <button className="btn-section" onClick={() => navigate("/admin/categorie/new")}>
+                        Ajouter une catégorie
+                    </button>
+                    <button
+                        className="btn-section"
+                        onClick={() => navigate("/categorie/")}
+                        style={{ marginLeft: '10px', backgroundColor: '#2ecc71' }}
+                    >
+                        Voir les catégories
+                    </button>
+                </section>
+
+                {/* Gestion taches */}
+                <section>
+                    <h2>Gestion des taches</h2>
+                    <p>Créer, modifier ou supprimer les tâches.</p>
+                    <button className="btn-section" onClick={() => navigate("/tache/show")}>
+                        Voir toutes les taches
                     </button>
                 </section>
 
