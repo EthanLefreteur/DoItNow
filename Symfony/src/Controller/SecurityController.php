@@ -87,7 +87,6 @@ class SecurityController extends AbstractController {
                 return $this->json([
                     "code-erreur" => 401,
                     "token" => '',
-                    "isAdmin" => $user->getRole() == "ADMIN",
                 ]);
             }
             $date = new DateTime();
@@ -101,7 +100,8 @@ class SecurityController extends AbstractController {
 
             return $this->json([
                 "code-erreur" => 200,
-                "token" => $token
+                "token" => $token,
+                "isAdmin" => $user->getRole() == "ADMIN",
             ]);
         }
 
