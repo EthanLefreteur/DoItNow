@@ -27,19 +27,19 @@ import '../../style/adminPanel.css'; export default function AddCategorie() {
 
         try {
             await axios.post(
-                "http://127.0.0.1:8000/admin/categorie/new",
+                "http://127.0.0.1:8000/categorie/new",
                 {
                     nom: categorie.nom,
                     couleur: categorie.couleur
                 },
-                { headers: { Authorization: `Bearer ${token}` } }
+                { headers: { Authorization: `${token}` } }
             );
 
             setSuccess(true);
             setCategorie({ nom: "", couleur: "#000000" });
 
             // redirection vers la liste des catégories
-            navigate("/admin/categorie/show/:id");
+            navigate("/categorie/");
         } catch {
             setError("Erreur lors de l'ajout de la catégorie.");
         }
